@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8">
+		<meta name="viewport" content="width=device-width, initial-scale=1,maximum-scale=1,user-scalable=no">
+		<meta name="apple-mobile-web-app-capable" content="yes">
+		<meta name="apple-mobile-web-app-status-bar-style" content="black">
+		<script type="text/javascript" src="../js/jquery.min.js"></script> 
+		<script type="text/javascript" src="../js/common.js"></script>
+		<script type="text/javascript" src="../js/module_custom.js"></script>
+		
+		<!--标准mui.css-->
+		<link rel="stylesheet" href="../css/mui.min.css">
+		<!--App自定义的css-->
+		
+		<style>
+			input, button, .mui-btn {
+				margin-top: 8x;
+				margin-left: 10px;
+			}
+			
+			.mui-btns {
+				font-size: 16px;
+				padding: 8px;
+				margin: 10px 8px 3px;
+				width:93%;
+			}
+			
+			.title{
+				margin: 20px 15px 7px;
+				color: #6d6d72;
+				font-size: 15px;
+			}
+			
+			.mui-switch-status:before {
+				content: '离';
+				color: #999;
+			}
+			
+			.mui-switch.mui-active.mui-status:before {
+				content: '入';
+				color: #fff;
+			}
+			.mui-button-warning{
+				color:red;
+			}
+		</style>
+		
+	</head>
+
+	<body>
+		
+		<div class="mui-content">
+			<h5 style="margin-top: 15px; margin-left: 10px;">筛选区：</h5>
+			<div class="mui-content-padded" style="margin:5px">
+			<select id="gwID">
+			  <option value="gatewayId"></option>
+			</select>
+			</div>
+			<!--<div style="float:right; margin-right: 30px; margin-top: -40px;">
+				<input type="radio" name="radio1" value="全选"> 全选
+				<input type="radio" name="radio1" value="取消"> 取消
+			</div>
+					-->
+			<h5 style="margin-top: 15px; margin-left: 10px;">功能区：</h5>
+			<button type="button" id="btn2" onclick="queryJoin()" class="mui-btn mui-btn-outlined">
+				查询状态
+			</button>
+			<button type="button" id="btn3" onclick="cleanNet()" class="mui-btn mui-btn-outlined mui-button-warning">
+				一键清网
+			</button>
+			
+			<h5 style="margin-top: 15px; margin-left: 10px;">
+				数据列表区：
+				
+				<span id="leavecount" style="float:right; margin-right: 30px;">离网量:</span>
+				<span id="joincount" style="float:right; margin-right: 10px;;">入网量:</span>
+			</h5>
+			<div class="mui-card">
+				<ul class="mui-table-view mui-table-view-chevron">
+					<li class="mui-table-view-cell">是否全选
+						<div id="M_Toggle" class="mui-switch mui-active">
+							<div class="mui-switch-handle"></div>
+						</div>
+					</li>
+				</ul>
+				
+				<ul class="mui-table-view mui-table-view-chevron">
+					<li class="mui-table-view-cell">入网状态
+						<div id="M_Toggle_Status" class="mui-switch mui-active mui-switch-status mui-status">
+							<div class="mui-switch-handle"></div>
+						</div>
+					</li>
+				</ul>
+				<ul id="lstCU" class="mui-table-view mui-table-view-chevron">
+					
+				</ul>
+			</div>
+		</div>
+	</body>
+	
+	<script src="../js/mui.js"></script>
+	<script>
+		mui.init({
+			swipeBack:true //启用右滑关闭功能
+		});
+	</script>
+</html>

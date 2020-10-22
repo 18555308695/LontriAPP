@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8">
+		<meta name="viewport" content="width=device-width, initial-scale=1,maximum-scale=1,user-scalable=no">
+		<meta name="apple-mobile-web-app-capable" content="yes">
+		<meta name="apple-mobile-web-app-status-bar-style" content="black">
+		<script type="text/javascript" src="../js/jquery.min.js"></script> 
+		<script type="text/javascript" src="../js/common.js"></script>
+		<script type="text/javascript" src="../js/module_custom.js"></script>
+		
+		<!--标准mui.css-->
+		<link rel="stylesheet" href="../css/mui.min.css">
+		<!--App自定义的css-->
+		
+		<style>
+			input, button, .mui-btn {
+				margin-top: 8x;
+				margin-left: 10px;
+			}
+			
+			.mui-btns {
+				font-size: 16px;
+				padding: 8px;
+				margin: 10px 8px 3px;
+				width:93%;
+			}
+			
+			.title{
+				margin: 20px 15px 7px;
+				color: #6d6d72;
+				font-size: 15px;
+			}
+			
+			.mui-switch-status:before {
+				content: '离';
+				color: #999;
+			}
+			
+			.mui-switch.mui-active.mui-status:before {
+				content: '入';
+				color: #fff;
+			}
+			.mui-button-warning{
+				color:red;
+			}
+		</style>
+		
+	</head>
+
+	<body>
+		
+		<div class="mui-content">
+			
+			<h5 style="margin-top: 15px; margin-left: 10px;">筛选区：</h5>
+			<!-- <select id="gwLst" class="mui-btns mui-btn-block">
+			</select> -->
+			<div class="mui-content-padded" style="margin:5px">
+		<!-- 		<input type="search" id="gwID" style="width:90%; margin-left: 2.6px;" value="39FFD6055256323444592243" placeholder="39FFD6055256323444592243"> -->
+			<select id="gwID">
+			  <option value="gatewayId"></option>
+			</select>
+			</div>
+			
+			<h5 style="margin-top: 15px; margin-left: 10px;">功能区：</h5>
+			<button type="button" id="btn1" onclick="issueMacID()" class="mui-btn mui-btn-outlined mui-button-warning">
+				下发MacID
+			</button>
+			<button type="button" id="btn2" onclick="queryJoinMacID()" class="mui-btn mui-btn-outlined">
+				查询状态
+			</button>
+			<h5 style="margin-top: 15px; margin-left: 10px;">
+				数据列表区：
+				
+				<span id="leavewritecount" style="float:right; margin-right: 30px;">未写入量:</span>
+				<span id="joinwritecount" style="float:right; margin-right: 10px;">写入量:</span>
+			</h5>
+			<div class="mui-card">
+			<!-- 	<ul class="mui-table-view mui-table-view-chevron">
+					<li class="mui-table-view-cell">是否全选
+						<div id="M_Toggle" class="mui-switch mui-active">
+							<div class="mui-switch-handle"></div>
+						</div>
+					</li>
+				</ul> -->
+				
+				<ul class="mui-table-view mui-table-view-chevron">
+					<li class="mui-table-view-cell">写入状态
+						<div id="M_Toggle_Write" class="mui-switch mui-active mui-switch-status mui-status">
+							<div class="mui-switch-handle"></div>
+						</div>
+					</li>
+				</ul>
+				<ul id="lstCUwrite" class="mui-table-view mui-table-view-chevron">
+					
+				</ul>
+			</div>
+		</div>
+	</body>
+	
+	<script src="../js/mui.js"></script>
+	<script>
+		mui.init({
+			swipeBack:true //启用右滑关闭功能
+		});
+	</script>
+</html>

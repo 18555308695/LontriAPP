@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8">
+		<meta name="viewport" content="width=device-width, initial-scale=1,maximum-scale=1,user-scalable=no">
+		<meta name="apple-mobile-web-app-capable" content="yes">
+		<meta name="apple-mobile-web-app-status-bar-style" content="black">
+		<script type="text/javascript" src="../js/jquery.min.js"></script> 
+		<script type="text/javascript" src="../js/common.js"></script>
+		<script type="text/javascript" src="../js/module_custom.js"></script>
+		
+		<!--标准mui.css-->
+		<link rel="stylesheet" href="../css/mui.min.css">
+		<!--App自定义的css-->
+		
+		<style>
+			input, button, .mui-btn {
+				margin-top: 8x;
+				margin-left: 10px;
+			}
+			
+			.mui-btns {
+				font-size: 16px;
+				padding: 8px;
+				margin: 10px 8px 3px;
+				width:93%;
+			}
+			
+			.title{
+				margin: 20px 15px 7px;
+				color: #6d6d72;
+				font-size: 15px;
+			}
+			
+			.mui-switch-status:before {
+				content: '离';
+				color: #999;
+			}
+			
+			.mui-switch.mui-active.mui-status:before {
+				content: '入';
+				color: #fff;
+			}
+			.mui-button-warning{
+				color:red;
+			}
+		</style>
+		
+	</head>
+
+	<body>
+		
+		<div class="mui-content">
+			<h5 style="margin-top: 15px; margin-left: 10px;">主操作区：</h5>
+			<button type="button" style="margin-left: 38%;" class="mui-btn mui-btn-outlined" onclick="openBarcodeGW()">
+				扫一扫
+			</button>
+			<h5 style="margin-top: 15px; margin-left: 10px;">筛选网关：</h5>
+			<!-- <select id="gwLst" class="mui-btns mui-btn-block">
+			</select> -->
+			<div class="mui-content-padded" style="margin:5px">
+			<select id="gwID">
+			  <option value="gatewayId"></option>
+			</select>
+			</div>
+			
+			<h5 style="margin-top: 15px; margin-left: 10px;">功能区：</h5>
+			<button type="button" id="btn1" onclick="emptyNetwork()" class="mui-btn mui-btn-outlined mui-button-warning">
+				清空网关
+			</button>
+			<button type="button" id="btn1" onclick="emptyGWDBData()" class="mui-btn mui-btn-outlined mui-button-warning">
+				清空DB
+			</button>
+			<!-- <button type="button" id="btn1" onclick="QueryGateway()" class="mui-btn mui-btn-outlined mui-button-warning">
+				清空DB2
+			</button> -->
+		</div>
+	</body>
+	
+	<script src="../js/mui.js"></script>
+	<script>
+		mui.init({
+			swipeBack:true //启用右滑关闭功能
+		});
+	</script>
+</html>
