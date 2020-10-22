@@ -14,7 +14,7 @@ $(function() {
 
 })
 
-// 打开二维码扫描界面 
+// 打开二维码扫描界面 111
 function openBarcode() {
 	createWithoutTitle('barcode_scan.html', {
 		titleNView: {
