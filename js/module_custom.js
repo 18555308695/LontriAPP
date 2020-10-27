@@ -1,6 +1,6 @@
 var api = "";
 $(function() {
-	api = 'http://192.168.0.185/SmartIoTWCFService/IoTRESTService.svc'
+	api = 'http://192.168.0.95/SmartIoTWCFService/IoTRESTService.svc'
 	GetToken();
 	BindToggle();
 	BindStatusToggle();
@@ -14,7 +14,7 @@ $(function() {
 
 })
 
-// 打开二维码扫描界面 111
+// 打开二维码扫描界面 
 function openBarcode() {
 	createWithoutTitle('barcode_scan.html', {
 		titleNView: {
@@ -116,9 +116,9 @@ var two = [];
 function scaned(t, r, f) {
 	var number = /^[a-fA-F0-9]*$/
 	if (!number.test(r)) {
-		alert("请扫描正确的二维码 内容:" + r)
+		alert("请扫描正确的CU二维码 内容:" + r)
 	} else if (r.length != 16) {
-		alert("请扫描正确的二维码 内容长度:" + r.length)
+		alert("请扫描正确的CU二维码 内容长度:" + r.length)
 	} else {
 		let flag = true;
 		$('li').each(function() {
@@ -133,7 +133,7 @@ function scaned(t, r, f) {
 				"<a class='mui-navigate-right' href=' '>" +
 				"<input name='chkcu' type='checkbox' checked='checked' value='" + r + "'>&nbsp;" + "<span class='hdata'>" + "序号:" +
 				indexId + "</span>" +
-				"<div class='hdata'>" + r + "</div>" +
+				"<div class='hdata'>" + r + "</div>" +"<input id='cuinfo' type='text' style='width:80px;height:30px'>"+
 				"</ a>" +
 				"</li>"
 			);
@@ -159,30 +159,47 @@ var libselect = document.getElementById("gwID");//获取下拉框ID
 	if (selectvalue == null || selectvalue == "") {
 		alert("请选择网关信息")
 	}
-//	var arrZigbeeID = ["60A423FFFE571F01","60A423FFFE571F02","60A423FFFE571F03","60A423FFFE571F04","60A423FFFE571F05","60A423FFFE571F06","60A423FFFE571F07","60A423FFFE571F08","60A423FFFE571F09","60A423FFFE571F10","60A423FFFE571F11","60A423FFFE571F12","60A423FFFE571F13","60A423FFFE571F14","60A423FFFE571F15","60A423FFFE571F16","60A423FFFE571F17","60A423FFFE571F18","60A423FFFE571F19","60A423FFFE571F20","60A423FFFE571F21","60A423FFFE571F22","60A423FFFE571F23","60A423FFFE571F24","60A423FFFE571F25","60A423FFFE571F26","60A423FFFE571F27","60A423FFFE571F28","60A423FFFE571F29","60A423FFFE571F30","60A423FFFE571F31","60A423FFFE571F32","60A423FFFE571F33","60A423FFFE571F34","60A423FFFE571F35","60A423FFFE571F36","60A423FFFE571F37","60A423FFFE571F38","60A423FFFE571F39","60A423FFFE571F40","60A423FFFE571F41","60A423FFFE571F42","60A423FFFE571F43","60A423FFFE571F44","60A423FFFE571F45","60A423FFFE571F46","60A423FFFE571F47","60A423FFFE571F48","60A423FFFE571F49","60A423FFFE571F50","60A423FFFE571F51","60A423FFFE571F52","60A423FFFE571F53","60A423FFFE571F54","60A423FFFE571F55","60A423FFFE571F56","60A423FFFE571F57","60A423FFFE571F58","60A423FFFE571F59","60A423FFFE571F60","60A423FFFE571F61","60A423FFFE571F62","60A423FFFE571F63","60A423FFFE571F64","60A423FFFE571F65","60A423FFFE571F66","60A423FFFE571F67","60A423FFFE571F68","60A423FFFE571F69","60A423FFFE571F70","60A423FFFE571F71","60A423FFFE571F72","60A423FFFE571F73","60A423FFFE571F74","60A423FFFE571F75","60A423FFFE571F76","60A423FFFE571F77","60A423FFFE571F78","60A423FFFE571F79","60A423FFFE571F80","60A423FFFE571F81","60A423FFFE571F82","60A423FFFE571F83","60A423FFFE571F84","60A423FFFE571F85","60A423FFFE571F86","60A423FFFE571F87","60A423FFFE571F88","60A423FFFE571F89","60A423FFFE571F90","60A423FFFE571F91","60A423FFFE571F92","60A423FFFE571F93","60A423FFFE571F94","60A423FFFE571F95","60A423FFFE571F96","60A423FFFE571F97","60A423FFFE571F98","60A423FFFE571F99","60A423FFFE571D01","60A423FFFE571D02","60A423FFFE571D03","60A423FFFE571D04","60A423FFFE571D05","60A423FFFE571D06","60A423FFFE571D07","60A423FFFE571D08","60A423FFFE571D09","60A423FFFE571D10","60A423FFFE571D11","60A423FFFE571D12","60A423FFFE571D13","60A423FFFE571D14","60A423FFFE571D15","60A423FFFE571D16","60A423FFFE571D17","60A423FFFE571D18","60A423FFFE571D19","60A423FFFE571D20","60A423FFFE571D21","60A423FFFE571D22","60A423FFFE571D23","60A423FFFE571D24","60A423FFFE571D25","60A423FFFE571D26","60A423FFFE571D27","60A423FFFE571D31","60A423FFFE571D32","60A423FFFE571D33","60A423FFFE571D34","60A423FFFE571D35","60A423FFFE571D36","60A423FFFE571D37","60A423FFFE571D38"];
 	var arrZigbeeID=[];
+	var cuhead=[];
 	$('input[name="chkcu"]').each(function() {
 		var flag = $(this).prop('checked');
 		if (flag == true) {
 			$(this).prop("checked", true);
 			arrZigbeeID.push($(this).attr("value"));
 		}
-		// if ($(this).attr("checked") == "checked") {
-		// 	arrZigbeeID.push($(this).attr("value"));
-		// }
 	});
+	 var controls = document.getElementsByTagName('input');
+		 for(var i=0; i<controls.length; i++){
+		     if(controls[i].type=='text'){
+		        var vl=controls[i].value
+				console.log(vl)
+				if(vl==""){
+					alert("请输入CU编号信息");
+					return;
+					}
+					else{
+							cuhead.push(vl);
+					}
+		       }
+		 }
+	//var arrZigbeeID=["60A423FFFE571F95"]
+	//var selectvalue=["39FFD6055256323444592243"]
 	if (arrZigbeeID.length == 0) {
 		alert('请选择提交CU信息');
 		return;
 	}
 	console.log("arrZigbeeID"+arrZigbeeID)
+	
+	var CUListInfo=[]	for (var x = 0; x < arrZigbeeID.length; x++) {	  var cuInfo = {	    "zigbeeid": arrZigbeeID[x],	    "header": cuhead[x]	  };	  CUListInfo.push(cuInfo);	}
+	console.log("CUListInfo"+JSON.stringify(CUListInfo))
 	$.ajax({
 		type: 'post', //也可为get
 		url: api + '/uploaddriverlightsintialrawdata',
 		async: false,
 		data: JSON.stringify({
-			'lightIds': arrZigbeeID, //json格式
-			'gatewayId': selectvalue
+			//'lightIds': arrZigbeeID, //json格式
+			'gatewayId': selectvalue,
+			'CUListInfo':CUListInfo
 		}),
 		header: {
 			'Authorization': 'Bearer ' + getLocalData()
@@ -193,7 +210,8 @@ var libselect = document.getElementById("gwID");//获取下拉框ID
 		},
 		success: function(data, status) {
 			if (data.success == true) {
-				alert('指令发送成功！');
+				alert(data.message);
+				// alert('指令发送成功！');
 			} else {
 				alert(data.message);
 			}
@@ -283,6 +301,7 @@ function queryJoinMacID() {
 //入网状态查询
 var numbermin;
 var arrRetry=[]
+var arrjoin=[];
 function queryJoin() {
 	var arrClear = [];
 	var arrJoin = [];
@@ -310,12 +329,14 @@ function queryJoin() {
 		success: function(data) {
 			currentData = [];
 			arrRetry=[];
+			arrjoin=[];
 			var html = "";
 			for (var i = 0; i < data.length; i++) {
 				var zig = data[i].zigbeeid.substring(4, 20)
 				if (data[i].IsJoinNet == true) {
 					arrJoin.push(data[i]);
 					data[i].IsJoinNet = "入网";
+					arrjoin.push(data[i].zigbeeid)
 					currentData.push(data[i]);
 					$("#lstCU").append("<li  class='mui-table-view-cell mui-collapse skincheck'>" +
 						"<a class='hdata' href='#'>" +
@@ -933,9 +954,14 @@ function joinRetry(){
 		alert("请选择网关信息")
 	}
 	if (arrRetry.length == 0) {
-		alert('请选择补写灯的信息');
+		alert('请选择离网补写灯的信息');
 		return;
 	}
+	if (arrjoin.length != 0) {
+		alert('已是入网状态，请选择离网状态灯的信息');
+		return;
+	}
+	
 	console.log("arrRetry",arrRetry)
 	$.ajax({
 		type: "POST",
