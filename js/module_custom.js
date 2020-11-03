@@ -1,6 +1,6 @@
 var api = "";
 $(function() {
-	api = 'http://192.168.0.95/SmartIoTWCFService/IoTRESTService.svc'
+	api = 'https://ab-inbev.lontri.com/SmartIoTWCFService/IoTRESTService.svc'
 	GetToken();
 	BindToggle();
 	BindStatusToggle();
@@ -51,12 +51,11 @@ function openBarcodeGW() {
 	});
 }
 //网关扫描var scanGatewayId="";function scanedGW(t, r, f) {	//alert(r)	scanGatewayId=r
-//	alert(scanGatewayId)	var number = /^[a-fA-F0-9]*$/	if (!number.test(r)) {		alert("请扫描正确的网关二维码 内容:" + r)	} else if (r.length != 24) {		alert("请扫描正确的网关二维码 内容长度:" + r.length)	} else {		QueryGateway();		let flag = true;		$('li').each(function() {			if ($(this).text().substring($(this).text().length - 16, $(this).text().length) == r) {				flag = false;				alert("请不要重复扫描二维码")			}		});	}}
+//	alert(scanGatewayId)	var number = /^[a-fA-F0-9]*$/	if (!number.test(r)) {		alert("请扫描正确的网关二维码 内容:" + r)	} else if (r.length != 24) {		alert("请扫描正确的网关二维码 内容长度:" + r.length)	} else {		QueryGateway();		// let flag = true;		// $('li').each(function() {		// 	if ($(this).text().substring($(this).text().length - 16, $(this).text().length) == r) {		// 		flag = false;		// 		alert("请不要重复扫描二维码")		// 	}		// });	}}
 //根据gatewayid查找网关
 var GlobgatewayId="";
 var GlobgatewayName="";
 function QueryGateway(){
-	//console.log("scanGatewayId"+scanGatewayId)
 	var gatewayid=scanGatewayId;
 	console.log(gatewayid)
 	$.ajax({
@@ -67,11 +66,15 @@ function QueryGateway(){
 			request.setRequestHeader("Authorization", "Bearer " + getLocalData());
 		},
 		success: function(data) {
-			
+			console.log("data"+data)
 			GlobgatewayId=data.gatewayId
 			GlobgatewayName=data.gatewayName
 			if(GlobgatewayId==undefined){
-				alert("该网关信息无效，请扫描有效的二维码")
+				window.localStorage.setItem("GlobgatewayId",scanGatewayId);
+				alert("该网关信息编号不存在，请填写网关编号")
+				var optio = '';
+				optio = optio + "<option value='" + scanGatewayId + "'>" + scanGatewayId + "</option>";
+				$('#gwID').html(optio);
 			}
 			else{
 			 window.localStorage.setItem("GlobgatewayId",data.gatewayId);
@@ -129,21 +132,22 @@ function scaned(t, r, f) {
 		});
 		if (flag) {
 			let indexId = $("#lstCU li").length + 1
+			// $("#lstCU").prepend("<li class='mui-table-view-cell mui-collapse'>" +
+			// 	"<a class='mui-navigate-right' href=' '>" +
+			// 	"<input name='chkcu' type='checkbox' checked='checked' value='" + r + "'>&nbsp;" + "<span class='hdata'>" + "序号:" +
+			// 	indexId + "</span>" +
+			// 	"<div class='hdata'>" + r + "</div>" +"<input id='cuinfo' type='text' style='width:80px;height:30px'>"+
+			// 	"</ a>" +
+			// 	"</li>"
+			// );
 			$("#lstCU").prepend("<li class='mui-table-view-cell mui-collapse'>" +
 				"<a class='mui-navigate-right' href=' '>" +
 				"<input name='chkcu' type='checkbox' checked='checked' value='" + r + "'>&nbsp;" + "<span class='hdata'>" + "序号:" +
 				indexId + "</span>" +
-				"<div class='hdata'>" + r + "</div>" +"<input id='cuinfo' type='text' style='width:80px;height:30px'>"+
+				"<div class='hdata'>" + r + "</div>" +
 				"</ a>" +
 				"</li>"
 			);
-			// $("#lstCU").prepend("<li class='mui-table-view-cell mui-collapse'>" +
-			//   "<a class='mui-navigate-right' href=' '>" +
-			//   "<input name='chkcu' type='checkbox' checked='checked' value='" + r + "'>&nbsp;"  +
-			//   "<div class='hdata'>" + r + "</div>" +
-			//   "</ a>" +
-			//   "</li>"
-			// );
 		}
 	}
 }
@@ -183,15 +187,17 @@ var libselect = document.getElementById("gwID");//获取下拉框ID
 		       }
 		 }
 	//var arrZigbeeID=["60A423FFFE571F95"]
-	//var selectvalue=["39FFD6055256323444592243"]
+	//var selectvalue="39FFD6055256323444592243"
 	if (arrZigbeeID.length == 0) {
 		alert('请选择提交CU信息');
 		return;
 	}
 	console.log("arrZigbeeID"+arrZigbeeID)
+	console.log("selectvalue"+selectvalue)
 	
 	var CUListInfo=[]	for (var x = 0; x < arrZigbeeID.length; x++) {	  var cuInfo = {	    "zigbeeid": arrZigbeeID[x],	    "header": cuhead[x]	  };	  CUListInfo.push(cuInfo);	}
 	console.log("CUListInfo"+JSON.stringify(CUListInfo))
+	console.log("selectvalue"+selectvalue)
 	$.ajax({
 		type: 'post', //也可为get
 		url: api + '/uploaddriverlightsintialrawdata',
@@ -210,8 +216,8 @@ var libselect = document.getElementById("gwID");//获取下拉框ID
 		},
 		success: function(data, status) {
 			if (data.success == true) {
-				alert(data.message);
-				// alert('指令发送成功！');
+			//	alert(data.message);
+				 alert('指令发送成功！');
 			} else {
 				alert(data.message);
 			}
@@ -247,7 +253,7 @@ function queryJoinMacID() {
 		beforeSend: function(request) {
 			request.setRequestHeader("Content-Type", "application/json;charset=UTF-8");
 		},
-		async: true,
+		async: false,
 		success: function(data) {
 			currentMacID = [];
 			for (var i = 0; i < data.length; i++) {
@@ -325,7 +331,7 @@ function queryJoin() {
 		beforeSend: function(request) {
 			request.setRequestHeader("Content-Type", "application/json;charset=UTF-8");
 		},
-		async: true,
+		async: false,
 		success: function(data) {
 			currentData = [];
 			arrRetry=[];
@@ -336,7 +342,7 @@ function queryJoin() {
 				if (data[i].IsJoinNet == true) {
 					arrJoin.push(data[i]);
 					data[i].IsJoinNet = "入网";
-					arrjoin.push(data[i].zigbeeid)
+					//arrjoin.push(data[i].zigbeeid)
 					currentData.push(data[i]);
 					$("#lstCU").append("<li  class='mui-table-view-cell mui-collapse skincheck'>" +
 						"<a class='hdata' href='#'>" +
@@ -838,7 +844,55 @@ function BindJoinNetData2(data) {
 
 	}
 }
-
+//确认网关编号
+function setNetwork(){
+	var gatewayID = document.getElementById('gwValue').value;
+	if (gatewayID== null || gatewayID == "") {
+		alert('请输入网关编号');
+		return;
+	}
+	var libselect = document.getElementById("gwID");//获取下拉框ID
+	var index=libselect.selectedIndex;        //拿到选中项(option)的索引(index)
+	var selectvalue=libselect.options[index].value;             //拿到选中项options的value
+	if (selectvalue == null || selectvalue == "") {
+		alert("请选择网关信息")
+	}
+	var GlobgatewayId = window.localStorage.getItem('GlobgatewayId');
+	if (GlobgatewayId== null || GlobgatewayId == "") {
+		alert('请选择扫描的网关信息');
+		return;
+	}
+	console.log(gatewayID)
+	$.ajax({
+		type: "POST",
+		url: api + '/setgatewaybygatewayid',
+		data: JSON.stringify({
+			'value':gatewayID,
+			'gatewayId': selectvalue
+		}),
+		beforeSend: function(request) {
+			request.setRequestHeader("Authorization", "Bearer " + getLocalData());
+			request.setRequestHeader("Content-Type", "application/json;charset=UTF-8");
+		},
+		success: function(data) {
+			if (data.success == true) {
+				alert(data.message)
+				window.localStorage.setItem("GlobgatewayName",gatewayID);
+				var optio = '';
+				optio = optio + "<option value='" + selectvalue + "'>" + gatewayID + "</option>";
+				$('#gwID').html(optio);
+				
+			} else {
+				alert(data.message)
+			}
+	
+		},
+		error: function(data, status, e) {
+			alert("发送指令发送失败")
+		}
+	});
+	}
+//清空网关
 function emptyNetwork() {
 	//var gatewayID = $("#gwID").attr("value");
 	var libselect = document.getElementById("gwID");//获取下拉框ID
@@ -852,6 +906,7 @@ function emptyNetwork() {
 		alert('请选择扫描的网关信息');
 		return;
 	}
+	console.log("selectvalue:"+selectvalue)
 	$.ajax({
 		type: "POST",
 		url: api + '/initgateway',
@@ -957,10 +1012,10 @@ function joinRetry(){
 		alert('请选择离网补写灯的信息');
 		return;
 	}
-	if (arrjoin.length != 0) {
-		alert('已是入网状态，请选择离网状态灯的信息');
-		return;
-	}
+	// if (arrjoin.length != 0) {
+	// 	alert('已是入网状态，请选择离网状态灯的信息');
+	// 	return;
+	// }
 	
 	console.log("arrRetry",arrRetry)
 	$.ajax({
@@ -1054,9 +1109,9 @@ function GetToken() {
 		// 	"userName": "LontriAdmin"
 		// }),
 		data: JSON.stringify({
-			"password": "test",
+			"password": "123456",
 			"roleId": "b206b30f-cdf5-4a42-960d-9c9b29cfcab2",
-			"userName": "test"
+			"userName": "testbev"
 		}),
 		beforeSend: function(request) {
 			request.setRequestHeader("Content-Type", "application/json;charset=UTF-8");

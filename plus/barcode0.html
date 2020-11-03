@@ -63,8 +63,15 @@
 			  <option value="gatewayId"></option>
 			</select>
 			</div>
+			<h5 style="margin-top: 15px; margin-left: 10px;">填写网关编号：</h5>
 			
+			<div class="mui-content-padded" style="margin:5px">
+		<input type="search" id="gwValue" style="width:90%; margin-left: 2.6px;" value="" placeholder="请填写网关编号">
+			</div>
 			<h5 style="margin-top: 15px; margin-left: 10px;">功能区：</h5>
+			<button type="button" id="btn1" onclick="setNetwork()" class="mui-btn mui-btn-outlined mui-button-warning">
+				确认网关编号
+			</button>
 			<button type="button" id="btn1" onclick="emptyNetwork()" class="mui-btn mui-btn-outlined mui-button-warning">
 				清空网关
 			</button>
