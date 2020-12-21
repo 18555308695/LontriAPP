@@ -1,6 +1,6 @@
 {
     "@platforms" : [ "android", "iPhone", "iPad" ],
-    "id" : "H57C0FEEF", //应用的标识，创建应用时自动生成，勿手动修改 
+    "id" : "H5D52D134", //应用的标识，创建应用时自动生成，勿手动修改 
     "name" : "扫码上传工具", //应用名称，程序桌面图标名称 
     "version" : {
         "name" : "2.5.9", //应用版本名称 
@@ -228,10 +228,7 @@
                     }
                 },
                 "push" : {
-                    "unipush" : {
-                        //配置应用使用UniPush，参考https://ask.dcloud.net.cn/article/34 
-                        "description" : "UniPush"
-                    }
+                    "unipush" : {}
                 },
                 "share" : {
                     //配置应用使用分享功能，参考https://ask.dcloud.net.cn/article/27 

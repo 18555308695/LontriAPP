@@ -1,6 +1,7 @@
 var api = "";
 $(function() {
-	api = 'https://ab-inbev.lontri.com/SmartIoTWCFService/IoTRESTService.svc'
+		//api = 'http://192.168.0.185/SmartIoTWCFService/IoTRESTService.svc'
+		api = 'https://abb.lontri.com//SmartIoTWCFService/IoTRESTService.svc'
 	GetToken();
 	BindToggle();
 	BindStatusToggle();
@@ -201,7 +202,7 @@ var libselect = document.getElementById("gwID");//获取下拉框ID
 	$.ajax({
 		type: 'post', //也可为get
 		url: api + '/uploaddriverlightsintialrawdata',
-		async: false,
+		async: true,
 		data: JSON.stringify({
 			//'lightIds': arrZigbeeID, //json格式
 			'gatewayId': selectvalue,
@@ -253,7 +254,7 @@ function queryJoinMacID() {
 		beforeSend: function(request) {
 			request.setRequestHeader("Content-Type", "application/json;charset=UTF-8");
 		},
-		async: false,
+		async: true,
 		success: function(data) {
 			currentMacID = [];
 			for (var i = 0; i < data.length; i++) {
@@ -440,7 +441,7 @@ function cleanNet() {
 	$.ajax({
 		type: 'post', //也可为get
 		url: api + '/clearjoinnet',
-		async: false,
+		async: true,
 		data: JSON.stringify({
 			'lightIds': lightIDLst, //json格式
 			'gatewayId': selectvalue,
@@ -603,7 +604,7 @@ function turnOff() {
 						'type': "light"
 					}),
 					dataType: 'json',
-					async: false,
+					async: true,
 					beforeSend: function(request) {
 						request.setRequestHeader("Authorization", "Bearer " + getLocalData());
 						request.setRequestHeader("Content-Type", "application/json;charset=UTF-8");
@@ -1109,9 +1110,9 @@ function GetToken() {
 		// 	"userName": "LontriAdmin"
 		// }),
 		data: JSON.stringify({
-			"password": "123456",
+			"password": "james",
 			"roleId": "b206b30f-cdf5-4a42-960d-9c9b29cfcab2",
-			"userName": "testbev"
+			"userName": "james"
 		}),
 		beforeSend: function(request) {
 			request.setRequestHeader("Content-Type", "application/json;charset=UTF-8");
