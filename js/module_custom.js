@@ -1,7 +1,7 @@
 var api = "";
 $(function() {
-		//api = 'http://192.168.0.185/SmartIoTWCFService/IoTRESTService.svc'
-		api = 'https://abb.lontri.com//SmartIoTWCFService/IoTRESTService.svc'
+		api = 'https://iotlighting.lontri.com:8081/SmartIoTWCFService/IoTRESTService.svc'
+		//api = 'https://ab-inbev-ziy.lontri.com/SmartIoTWCFService/IoTRESTService.svc'
 	GetToken();
 	BindToggle();
 	BindStatusToggle();
@@ -229,6 +229,27 @@ var libselect = document.getElementById("gwID");//获取下拉框ID
 	});
 }
 
+
+//清空缓存
+function updateexpiredata(){
+	$.ajax({
+		type: 'post', //也可为get
+		url: api + '/updateexpiredata',
+		//data: JSON.stringify(paramarr),
+		dataType: 'json',
+		async: true,
+		beforeSend: function(request) {
+			request.setRequestHeader("Authorization", "Bearer " + getLocalData());
+			request.setRequestHeader("Content-Type", "application/json;charset=UTF-8");
+		},
+		success: function(data, status) {
+			alert(data.message);
+		},
+		error: function(data, status, e) {
+	
+		}
+	});
+}
 var currentMacID = [];
 //写入白名单查询
 function queryJoinMacID() {
@@ -332,7 +353,7 @@ function queryJoin() {
 		beforeSend: function(request) {
 			request.setRequestHeader("Content-Type", "application/json;charset=UTF-8");
 		},
-		async: false,
+		async: true,
 		success: function(data) {
 			currentData = [];
 			arrRetry=[];
@@ -1102,7 +1123,8 @@ function GetGW() {
 //获取数据token
 function GetToken() {
 	$.ajax({
-		type: "post",
+		type: "post", 
+		
 		url: api + '/login',
 		// data: JSON.stringify({
 		// 	"password": "123456",
@@ -1110,9 +1132,9 @@ function GetToken() {
 		// 	"userName": "LontriAdmin"
 		// }),
 		data: JSON.stringify({
-			"password": "james",
+			"password": "kayla",
 			"roleId": "b206b30f-cdf5-4a42-960d-9c9b29cfcab2",
-			"userName": "james"
+			"userName": "kayla"
 		}),
 		beforeSend: function(request) {
 			request.setRequestHeader("Content-Type", "application/json;charset=UTF-8");
